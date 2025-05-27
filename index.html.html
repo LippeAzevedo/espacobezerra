@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Espaço Bezerra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta de Cores Feminina e Suave */
+            --primary-color-feminine: #F8B4C4; 
+            --secondary-color-feminine: #D8BFD8; 
+            --accent-color-feminine: #E6A4B4; 
+            --accent-hover-feminine: #E08A9E;
+            --rose-gold-accent: #B76E79; 
+            
+            --text-primary-feminine: #5C3D4C; 
+            --text-secondary-feminine: #A0788A; 
+            
+            --bg-page-feminine: #FFF6F9; 
+            --bg-window-feminine: #FFFFFF; 
+            --bg-element-feminine: #FDF0F3; 
+            
+            --border-color-feminine: #EEDDE2; 
+            --input-bg-feminine: var(--white);
+            --input-border-feminine: var(--border-color-feminine);
+            --input-focus-border-feminine: var(--accent-color-feminine);
+            
+            --shadow-color-feminine: rgba(183, 110, 121, 0.15); 
+            --shadow-strong-feminine: rgba(183, 110, 121, 0.22);
+
+            --success-color-feminine: #77DD77; 
+            --error-color-feminine: #FF6961;   
+            --warning-color-feminine: #FFD700; 
+            --info-color-feminine: #AEC6CF;    
+            --cancel-color: #FFB347; 
+
+
+            --font-display: 'Playfair Display', serif; 
+            --font-body: 'Poppins', sans-serif;    
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            margin: 0;
+            background-color: var(--bg-page-feminine);
+            color: var(--text-primary-feminine);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: padding 0.3s ease; /* Para transição suave no modo mobile */
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 25px 30px;
+            background-color: var(--bg-window-feminine);
+            box-shadow: 0 5px 18px var(--shadow-color-feminine);
+            border-radius: 16px; 
+            border: 1px solid var(--border-color-feminine);
+            transition: all 0.3s ease;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color-feminine);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            color: var(--rose-gold-accent);
+            font-size: 34px; 
+            margin: 0 0 5px 0;
+            font-weight: 600;
+        }
+        header p {
+            color: var(--text-secondary-feminine);
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .login-section, .app-section, .admin-panel-section { display: none; }
+
+        /* Botões de Alternância de Visualização */
+        .view-toggle-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .view-toggle-buttons button {
+            /* Usar classe .std-button-feminine */
+            margin: 0 5px;
+            font-size: 13px;
+            padding: 6px 12px;
+        }
+
+
+        /* Estilos de Login Feminino */
+        .login-section form {
+            display: flex; flex-direction: column; gap: 18px; max-width: 380px;
+            margin: 20px auto; /* Margem superior reduzida por causa dos botões de toggle */
+            padding: 35px; border-radius: 12px;
+            background-color: var(--bg-element-feminine);
+            border: 1px solid var(--border-color-feminine);
+            box-shadow: 0 3px 10px var(--shadow-color-feminine);
+        }
+        .login-section h2 {
+            font-family: var(--font-display); color: var(--rose-gold-accent);
+            text-align: center; font-size: 26px; font-weight: 600; margin-bottom: 15px;
+        }
+        .login-section label {
+            font-weight: 500; color: var(--text-primary-feminine);
+            font-size: 14px; margin-bottom: 5px; display: block;
+        }
+        .login-section input[type="text"], .login-section input[type="password"] {
+            padding: 12px 14px; border: 1px solid var(--input-border-feminine);
+            border-radius: 8px; font-size: 15px; font-family: var(--font-body);
+            background-color: var(--input-bg-feminine);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; width: 100%;
+        }
+        .login-section input[type="text"]:focus, .login-section input[type="password"]:focus {
+            border-color: var(--input-focus-border-feminine);
+            box-shadow: 0 0 0 3px rgba(230, 164, 180, 0.3); 
+            outline: none;
+        }
+        .login-section button[type="submit"] { 
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--accent-color-feminine), var(--primary-color-feminine));
+            color: white; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 16px; font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            width: 100%; margin-top: 10px; box-shadow: 0 2px 4px var(--shadow-color-feminine);
+        }
+        .login-section button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--accent-hover-feminine), var(--primary-color-feminine));
+            transform: translateY(-1px);
+        }
+        #loginError {
+            color: var(--error-color-feminine); text-align: center; margin-top: 12px;
+            font-size: 14px; font-weight: 500;
+        }
+
+        /* Cabeçalho da App Feminino */
+        .app-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 25px; padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color-feminine);
+        }
+        .app-header h2 {
+            font-family: var(--font-display); color: var(--rose-gold-accent);
+            margin: 0; font-size: 26px; font-weight: 600;
+        }
+        .app-header-actions { display: flex; gap: 10px; }
+        
+        /* Botões Padrão (Estilo Feminino) */
+        .std-button-feminine {
+            padding: 8px 18px;
+            color: var(--rose-gold-accent);
+            background-color: transparent;
+            border: 1px solid var(--primary-color-feminine);
+            border-radius: 20px; 
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+            text-align: center;
+        }
+        .std-button-feminine:hover {
+            background-color: rgba(248, 180, 196, 0.15);
+            transform: translateY(-1px);
+        }
+        .std-button-feminine.primary-action { 
+            background-color: var(--accent-color-feminine);
+            border-color: var(--accent-color-feminine);
+            color: white;
+            box-shadow: 0 2px 4px var(--shadow-color-feminine);
+        }
+        .std-button-feminine.primary-action:hover {
+            background-color: var(--accent-hover-feminine);
+            border-color: var(--accent-hover-feminine);
+        }
+
+        .std-button-feminine.danger {
+            color: var(--error-color-feminine);
+            border-color: var(--error-color-feminine);
+        }
+        .std-button-feminine.danger:hover {
+            background-color: rgba(255, 105, 97, 0.1);
+        }
+        .std-button-feminine.admin {
+            color: var(--secondary-color-feminine); 
+            border-color: var(--secondary-color-feminine);
+        }
+        .std-button-feminine.admin:hover {
+            background-color: rgba(216, 191, 216, 0.15);
+        }
+         .std-button-feminine.admin-main {
+            background-color: var(--secondary-color-feminine);
+            border-color: var(--secondary-color-feminine);
+            color: white;
+        }
+        .std-button-feminine.admin-main:hover {
+            background-color: #c8a2c8; 
+        }
+        .std-button-feminine.success-button { 
+             background-color: var(--success-color-feminine);
+             border-color: var(--success-color-feminine);
+             color:white;
+        }
+        .std-button-feminine.success-button:hover{
+            background-color: #68d368; 
+        }
+
+
+        #logoutButton { 
+            padding: 8px 18px; color: var(--error-color-feminine); background-color: transparent;
+            border: 1px solid var(--error-color-feminine); border-radius: 20px; cursor: pointer;
+            font-weight: 500; font-size: 14px; transition: all 0.2s ease;
+        }
+        #logoutButton:hover { background-color: rgba(255, 105, 97, 0.1); transform: translateY(-1px); }
+        
+        #adminPanelButton { 
+             padding: 8px 18px; color: var(--secondary-color-feminine); background-color: transparent;
+             border: 1px solid var(--secondary-color-feminine); border-radius: 20px; cursor: pointer;
+             font-weight: 500; font-size: 14px; transition: all 0.2s ease; display: none;
+        }
+        #adminPanelButton:hover { background-color: rgba(216, 191, 216, 0.15); transform: translateY(-1px); }
+
+
+        /* Seção Profissional (Agendamentos) Feminino */
+        .professional-section h3 { 
+            font-family: var(--font-display); color: var(--rose-gold-accent);
+            font-size: 22px; font-weight: 600;
+            border-bottom: 1px solid var(--border-color-feminine);
+            padding-bottom: 8px; margin-top: 0; margin-bottom: 25px;
+        }
+        .professional-section h4 { 
+            font-family: var(--font-body); font-weight: 600; color: var(--text-primary-feminine);
+            margin-top: 25px; margin-bottom: 15px; font-size: 18px;
+        }
+        #appointmentForm { 
+            background-color: var(--bg-element-feminine); padding: 25px;
+            border-radius: 12px; margin-bottom: 30px;
+            border: 1px solid var(--border-color-feminine);
+        }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-grid-full-width { grid-column: 1 / -1; } 
+
+        .form-grid label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: var(--text-primary-feminine); }
+        .form-grid input[type="text"], .form-grid input[type="date"], .form-grid input[type="time"], 
+        .form-grid select, .form-grid textarea, .form-grid input[type="number"] {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--input-border-feminine);
+            border-radius: 8px; box-sizing: border-box; font-family: var(--font-body);
+            font-size: 15px; background-color: var(--input-bg-feminine);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
+            border-color: var(--input-focus-border-feminine);
+            box-shadow: 0 0 0 3px rgba(230, 164, 180, 0.3);
+            outline: none;
+        }
+        
+        .form-grid textarea { resize: vertical; min-height: 90px; }
+        
+        #proceduresCheckboxesContainer {
+            max-height: 150px; overflow-y: auto; padding: 10px;
+            border: 1px solid var(--input-border-feminine); border-radius: 8px;
+            background-color: var(--input-bg-feminine); margin-bottom: 10px;
+        }
+        .procedure-checkbox-item { display: block; margin-bottom: 8px; }
+        .procedure-checkbox-item input[type="checkbox"] { margin-right: 8px; accent-color: var(--accent-color-feminine); transform: scale(1.1); }
+        .procedure-checkbox-item label { font-weight: normal; font-size: 14px; display: inline; }
+        .procedure-checkbox-item .procedure-value-text { font-size: 0.9em; color: var(--text-secondary-feminine); margin-left: 5px;}
+
+        #totalAgendamentoValueDisplay { 
+            font-size: 15px; color: var(--rose-gold-accent); margin-top: 10px; font-weight: bold; 
+            display: block; text-align: right; padding: 5px 0;
+        }
+        
+        /* Lista de Agendamentos Feminino */
+        .appointments-list { margin-top: 30px; }
+        .appointment-item {
+            background-color: var(--bg-window-feminine); padding: 18px; border-radius: 10px;
+            margin-bottom: 14px; border: 1px solid var(--border-color-feminine);
+            box-shadow: 0 2px 6px var(--shadow-color-feminine);
+            display: flex; justify-content: space-between; align-items: flex-start;
+            flex-wrap: wrap; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .appointment-item:hover { transform: translateY(-2px); box-shadow: 0 4px 10px var(--shadow-strong-feminine); }
+        
+        .appointment-item.concluido { border-left: 5px solid var(--success-color-feminine); background-color: #f2fff2; }
+        .appointment-item.concluido .appointment-details p,
+        .appointment-item.concluido .appointment-details strong { text-decoration: line-through; color: var(--text-secondary-feminine); }
+        .appointment-item.cancelado { border-left: 5px solid var(--cancel-color); background-color: #fffaf0; }
+        .appointment-item.cancelado .appointment-details p,
+        .appointment-item.cancelado .appointment-details strong { text-decoration: line-through; color: var(--text-secondary-feminine); }
+
+        .appointment-details { flex-grow: 1; padding-right: 15px; }
+        .appointment-item p { margin: 4px 0 7px 0; font-size: 14px; color: var(--text-primary-feminine); }
+        .appointment-item p strong { font-weight: 600; }
+        .appointment-item .procedure-list-display { list-style: disc; margin-left: 20px; padding-left: 0;}
+        .appointment-item .procedure-list-display li { font-size: 14px; color: var(--rose-gold-accent); }
+        .appointment-item .procedure-list-display .procedure-value-text { font-size: 0.9em; color: var(--text-secondary-feminine); }
+        .appointment-item .total-value-display { font-weight: bold; margin-top: 5px; color: var(--rose-gold-accent); }
+        
+        .appointment-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+        .appointment-item button { 
+            padding: 6px 12px; border: 1px solid transparent; border-radius: 15px;
+            cursor: pointer; font-size: 13px; font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+        }
+        .appointment-item button:hover { transform: translateY(-1px); }
+        .appointment-item button:disabled { opacity: 0.6; cursor: not-allowed; background-color: var(--bg-element-feminine) !important; color:var(--text-secondary-feminine) !important; border-color: var(--border-color-feminine) !important; }
+
+        .appointment-item .edit-btn { color: var(--rose-gold-accent); background-color: rgba(183, 110, 121, 0.1); }
+        .appointment-item .edit-btn:hover { background-color: rgba(183, 110, 121, 0.2); }
+        .appointment-item .delete-btn { color: var(--error-color-feminine); background-color: rgba(255, 105, 97, 0.1); }
+        .appointment-item .delete-btn:hover { background-color: rgba(255, 105, 97, 0.2); }
+        
+        .appointment-item .toggle-concluido-btn { color: var(--success-color-feminine); background-color: rgba(119, 221, 119, 0.15); }
+        .appointment-item .toggle-concluido-btn:hover { background-color: rgba(119, 221, 119, 0.25); }
+        .appointment-item .toggle-concluido-btn.concluido { background-color: var(--success-color-feminine); color: white; }
+        .appointment-item .toggle-concluido-btn.concluido:hover { background-color: #68d368; }
+
+        .appointment-item .toggle-cancelado-btn { color: var(--cancel-color); background-color: rgba(255, 179, 71, 0.15); }
+        .appointment-item .toggle-cancelado-btn:hover { background-color: rgba(255, 179, 71, 0.25); }
+        .appointment-item .toggle-cancelado-btn.cancelado { background-color: var(--cancel-color); color: var(--text-primary-feminine); }
+        .appointment-item .toggle-cancelado-btn.cancelado:hover { background-color: #f0a030; }
+
+
+        /* Relatório de Ganhos Feminino */
+        #generateReportButton { 
+            margin-top: 20px; margin-bottom: 15px;
+        }
+        #reportSection { margin-top: 20px; padding: 20px; background-color: var(--bg-element-feminine); border-radius: 10px; border: 1px solid var(--border-color-feminine); }
+        #reportSection h5 { color: var(--rose-gold-accent); font-size: 18px; font-weight: 600; margin-top:0; margin-bottom:15px; }
+        #reportSection table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; border: 1px solid var(--border-color-feminine); border-radius: 8px; overflow:hidden; }
+        #reportSection th, #reportSection td { padding: 10px 14px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border-color-feminine); }
+        #reportSection th { background-color: rgba(248, 180, 196, 0.15); font-weight: 600; color: var(--rose-gold-accent); }
+        #reportSection tr:last-child td { border-bottom: none; }
+        #reportSection .total-ganhos { font-weight: 600; font-size: 17px; margin-top: 18px; text-align: right; color: var(--rose-gold-accent); }
+
+
+        /* Painel do Administrador Feminino */
+        .admin-panel-section { padding: 25px; background-color: var(--bg-window-feminine); border-radius: 12px; margin-top: 20px; border: 1px solid var(--border-color-feminine); }
+        .admin-panel-section h3 { 
+            font-family: var(--font-display); color: var(--secondary-color-feminine);
+            text-align: center; font-size: 26px; font-weight: 600; margin-bottom: 30px;
+        }
+        .admin-section { 
+            margin-bottom: 28px; padding: 20px; background-color: var(--bg-element-feminine);
+            border-radius: 10px; border: 1px solid var(--border-color-feminine);
+        }
+        .admin-section h4 { 
+            font-family: var(--font-body); font-weight: 600; color: var(--rose-gold-accent);
+            margin-top: 0; margin-bottom: 18px; font-size: 18px;
+        }
+        .admin-section label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: var(--text-primary-feminine); }
+        .admin-section input[type="text"], .admin-section input[type="password"], 
+        .admin-section input[type="number"], .admin-section select {
+            width: 100%; padding: 10px 14px; border-radius: 8px;
+            border: 1px solid var(--input-border-feminine); margin-bottom: 12px;
+            font-size: 15px; font-family: var(--font-body); background-color: var(--input-bg-feminine);
+        }
+        .admin-section input:focus, .admin-section select:focus {
+            border-color: var(--input-focus-border-feminine);
+            box-shadow: 0 0 0 3px rgba(230, 164, 180, 0.3); outline: none;
+        }
+        .admin-section select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23A0788A%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat; background-position: right 12px center;
+            background-size: 12px; padding-right: 35px;
+        }
+        .admin-section button { 
+            margin-right: 8px; margin-top: 5px;
+        }
+        
+        .admin-section ul { list-style: none; padding: 0; }
+        .admin-section li {
+            background-color: var(--bg-window-feminine); padding: 12px 15px; margin-bottom: 10px;
+            border-radius: 8px; display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 10px;
+            border: 1px solid var(--border-color-feminine);
+        }
+        .admin-section li > span:first-child { font-weight: 500; flex-basis: 200px; flex-grow: 1;}
+        .admin-section li div { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
+        .admin-section .procedure-item input[type="number"] { width: 90px; margin-left: 0; margin-bottom: 0; }
+        #adminLogoutButton { display:block; margin: 25px auto 0 auto; width: fit-content; }
+
+
+        /* Mensagens de Status Feminino */
+        #statusMessage, #adminStatusMessage {
+            padding: 12px 18px; text-align: center; font-weight: 500;
+            border-radius: 8px; margin: 18px auto; display: none;
+            max-width: 90%; font-size: 14px; border: 1px solid transparent;
+            box-shadow: 0 2px 5px var(--shadow-color-feminine);
+        }
+        #statusMessage.success, #adminStatusMessage.success { background-color: rgba(119, 221, 119, 0.2); color: #4b844b; border-color: rgba(119, 221, 119, 0.4); }
+        #statusMessage.error, #adminStatusMessage.error { background-color: rgba(255, 105, 97, 0.15); color: var(--error-color-feminine); border-color: rgba(255, 105, 97, 0.3); }
+        #statusMessage.info, #adminStatusMessage.info { background-color: rgba(174, 198, 207, 0.2); color: #5a788a; border-color: rgba(174, 198, 207, 0.4); }
+
+        /* Estilos para Visualização Mobile */
+        body.mobile-view-active {
+            font-size: 16px; /* Aumenta um pouco a fonte base para mobile */
+            padding: 0; /* Remove padding do body se houver */
+        }
+        body.mobile-view-active .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 15px; /* Padding interno do container no mobile */
+            border-radius: 0;
+            box-shadow: none;
+            border-left: none;
+            border-right: none;
+        }
+        body.mobile-view-active header h1 { font-size: 28px; }
+        body.mobile-view-active header p { font-size: 15px; }
+        body.mobile-view-active .login-section form {
+            max-width: 100%;
+            padding: 20px;
+            margin: 10px auto;
+            box-shadow: none;
+            border: none;
+            background-color: var(--bg-window-feminine); /* Para não ter fundo duplo */
+        }
+        body.mobile-view-active .app-header { flex-direction: column; align-items: flex-start; }
+        body.mobile-view-active .app-header-actions { width: 100%; margin-top:10px; justify-content: space-around; }
+        body.mobile-view-active .app-header-actions button { flex-grow: 1; }
+        
+        body.mobile-view-active .form-grid { grid-template-columns: 1fr; }
+        body.mobile-view-active #proceduresCheckboxesContainer { max-height: 200px; }
+
+        body.mobile-view-active .appointment-item { flex-direction: column; align-items: stretch; }
+        body.mobile-view-active .appointment-actions { 
+            flex-direction: row; 
+            flex-wrap: wrap; /* Permite quebrar linha se não couber */
+            margin-left: 0; 
+            margin-top: 15px; 
+            width: 100%; 
+            justify-content: space-around; /* Distribui botões */
+        }
+        body.mobile-view-active .appointment-actions button { 
+            /* flex-grow: 1;  Removido para não esticar demais */
+            margin-bottom: 5px; /* Espaço se quebrar linha */
+            padding: 8px 10px; /* Ajuste de padding para mobile */
+        }
+        
+        body.mobile-view-active .admin-section { padding: 15px; }
+        body.mobile-view-active .admin-section li { flex-direction: column; align-items: flex-start;}
+        body.mobile-view-active .admin-section li div { margin-top: 8px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        body.mobile-view-active .admin-section .procedure-item input[type="number"] { width: 70px; }
+        body.mobile-view-active #addProcedureToProfessionalForm { flex-direction: column; align-items: stretch;}
+        body.mobile-view-active #addProcedureToProfessionalForm div { width: 100%; }
+        body.mobile-view-active #addProcedureToProfessionalForm button { width: 100%; margin-top: 10px; }
+
+
+        @media (max-width: 768px) { /* Estilos padrão para mobile, que serão sobrescritos se mobile-view-active não estiver presente */
+            /* Alguns estilos já estão aqui, mas a classe mobile-view-active dará controle explícito */
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-element-feminine); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color-feminine); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color-feminine); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Espaço Bezerra</h1>
+            <p>Sua beleza, nosso compromisso.</p>
+        </header>
+
+        <section id="loginSection" class="login-section">
+            <div class="view-toggle-buttons">
+                <button id="switchToMobileViewButton" class="std-button-feminine">Ver no Celular</button>
+                <button id="switchToDesktopViewButton" class="std-button-feminine" style="display:none;">Ver no Desktop</button>
+            </div>
+            <form id="loginForm">
+                <h2>Acessar Agenda</h2>
+                <div>
+                    <label for="username">Usuário:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Entrar</button>
+                <p id="loginError"></p>
+            </form>
+        </section>
+
+        <section id="appSection" class="app-section">
+            <div class="app-header">
+                <h2 id="welcomeMessage">Bem-vinda!</h2>
+                <div class="app-header-actions">
+                    <button id="adminPanelButton" class="std-button-feminine admin">Painel Admin</button>
+                    <button id="logoutButton" class="std-button-feminine danger">Sair</button>
+                </div>
+            </div>
+            <div id="statusMessage"></div>
+            <div id="professionalWorkspace" class="professional-section">
+                </div>
+        </section>
+
+        <section id="adminPanelSection" class="admin-panel-section">
+            <h3>Painel do Administrador</h3>
+            <div id="adminStatusMessage"></div>
+
+            <div class="admin-section">
+                <h4>Gerenciar Profissionais</h4>
+                <div id="manageProfessionalsContainer">
+                    </div>
+                <hr style="margin: 25px 0; border-color: var(--border-color-feminine);">
+                <h5>Adicionar Nova Profissional</h5>
+                <form id="addProfessionalForm">
+                    <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div><label for="newProfId">ID (Login):</label><input type="text" id="newProfId" required></div>
+                        <div><label for="newProfFullName">Nome Completo:</label><input type="text" id="newProfFullName" required></div>
+                        <div><label for="newProfPassword">Senha Inicial:</label><input type="password" id="newProfPassword" required></div>
+                        <div><label for="newProfArea">Área:</label>
+                            <select id="newProfArea" required>
+                                <option value="Unhas">Unhas</option>
+                                <option value="Sobrancelhas">Sobrancelhas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="std-button-feminine admin-main success-button">Adicionar Profissional</button>
+                </form>
+            </div>
+
+            <div class="admin-section">
+                <h4>Gerenciar Procedimentos e Valores</h4>
+                <label for="selectProfessionalForProcedures">Selecionar Profissional:</label>
+                <select id="selectProfessionalForProcedures" style="margin-bottom: 15px;"></select>
+                <div id="manageProceduresContainer">
+                    </div>
+                <h5 style="margin-top:20px;">Adicionar Novo Procedimento</h5>
+                <form id="addProcedureToProfessionalForm" style="display: flex; gap: 12px; align-items: flex-end; flex-wrap:wrap;">
+                    <div style="flex-grow:1;"><label for="newProcedureName">Nome do Procedimento:</label><input type="text" id="newProcedureName" required></div>
+                    <div style="width:120px;"><label for="newProcedureValue">Valor (R$):</label><input type="number" id="newProcedureValue" step="0.01" min="0" value="0.00" required></div>
+                    <button type="submit" class="std-button-feminine admin-main success-button" style="height: 42px; margin-bottom:12px;">Adicionar</button>
+                </form>
+            </div>
+
+            <div class="admin-section">
+                <h4>Backup e Restauração de Dados</h4>
+                <button id="exportDataButton" class="std-button-feminine admin">Exportar Backup (JSON)</button>
+                <div style="margin-top:15px;">
+                    <label for="importDataFile" style="display:block; margin-bottom:8px;">Carregar Backup (JSON):</label>
+                    <input type="file" id="importDataFile" accept=".json" style="margin-bottom:8px; display:block; font-size:13px;">
+                    <button id="importDataButton" class="std-button-feminine danger">Importar e Substituir Dados</button>
+                </div>
+            </div>
+             <button id="adminLogoutButton" class="std-button-feminine danger" style="margin: 25px auto 0 auto; display:block; width: fit-content;">Sair do Painel (Logout)</button>
+        </section>
+    </div>
+
+    <script>
+        const APP_DATA_KEY = 'espacoBezerraAppData_v9_view_toggle'; 
+        const VIEW_MODE_KEY = 'espacoBezerraViewMode'; // Chave para salvar a preferência de visualização
+
+        function getInitialProfessionalsData() {
+            return {
+                "Philippe": { 
+                    id: "Philippe", password: "88778784", fullName: "Philippe (Admin)",
+                    area: "Administração", isAdmin: true, procedures: []
+                },
+                "Denefer": {
+                    id: "Denefer", password: "1234", fullName: "Denefer Bezerra",
+                    area: "Sobrancelhas", isAdmin: false,
+                    procedures: [
+                        { name: "Design de Sobrancelhas (Pinça)", value: 30.00 },
+                        { name: "Design de Sobrancelhas com Henna", value: 45.00 },
+                        { name: "Brow Lamination", value: 120.00 },
+                        { name: "Lash Lifting", value: 100.00 },
+                        { name: "Micropigmentação Labial", value: 350.00 }
+                    ]
+                },
+                "Deisyane": {
+                    id: "Deisyane", password: "1234", fullName: "Deisyane Bezerra",
+                    area: "Unhas", isAdmin: false,
+                    procedures: [
+                        { name: "Manicure Simples", value: 25.00 },
+                        { name: "Manicure com Esmaltação em Gel", value: 60.00 },
+                        { name: "Pedicure Simples", value: 30.00 },
+                        { name: "Spa dos Pés", value: 50.00 },
+                        { name: "Alongamento Fibra de Vidro", value: 180.00 }
+                    ]
+                }
+            };
+        }
+
+        let loggedInUser = null;
+        let appData = { professionals: {}, appointments: [] };
+
+        const loginSection = document.getElementById('loginSection');
+        const appSection = document.getElementById('appSection');
+        const adminPanelSection = document.getElementById('adminPanelSection');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const logoutButton = document.getElementById('logoutButton');
+        const adminPanelButton = document.getElementById('adminPanelButton');
+        const professionalWorkspace = document.getElementById('professionalWorkspace');
+        const statusMessage = document.getElementById('statusMessage');
+        const adminStatusMessage = document.getElementById('adminStatusMessage');
+        const adminLogoutButton = document.getElementById('adminLogoutButton');
+        const switchToMobileViewButton = document.getElementById('switchToMobileViewButton');
+        const switchToDesktopViewButton = document.getElementById('switchToDesktopViewButton');
+
+
+        // --- Gerenciamento de Visualização (Mobile/Desktop) ---
+        function setViewMode(mode) { // mode pode ser 'mobile' ou 'desktop'
+            if (mode === 'mobile') {
+                document.body.classList.add('mobile-view-active');
+                switchToMobileViewButton.style.display = 'none';
+                switchToDesktopViewButton.style.display = 'inline-block';
+                localStorage.setItem(VIEW_MODE_KEY, 'mobile');
+            } else {
+                document.body.classList.remove('mobile-view-active');
+                switchToMobileViewButton.style.display = 'inline-block';
+                switchToDesktopViewButton.style.display = 'none';
+                localStorage.setItem(VIEW_MODE_KEY, 'desktop');
+            }
+        }
+
+        function loadViewModePreference() {
+            const preferredMode = localStorage.getItem(VIEW_MODE_KEY);
+            if (preferredMode === 'mobile') {
+                setViewMode('mobile');
+            } else {
+                setViewMode('desktop'); // Padrão para desktop
+            }
+        }
+
+        switchToMobileViewButton.addEventListener('click', () => setViewMode('mobile'));
+        switchToDesktopViewButton.addEventListener('click', () => setViewMode('desktop'));
+
+
+        // --- Funções de Persistência e Lógica Principal (como antes) ---
+        function loadAppDataFromLocalStorage() {
+            const storedData = localStorage.getItem(APP_DATA_KEY);
+            if (storedData) {
+                try {
+                    const parsedData = JSON.parse(storedData);
+                    if (parsedData && typeof parsedData.professionals === 'object' && Array.isArray(parsedData.appointments)) {
+                        appData = parsedData;
+                        Object.values(appData.professionals).forEach(prof => {
+                            if (!Array.isArray(prof.procedures)) prof.procedures = [];
+                            prof.procedures = prof.procedures.map(p => 
+                                typeof p === 'string' ? { name: p, value: 0.00 } : (p && p.name !== undefined && p.value !== undefined ? p : { name: "Procedimento Inválido", value: 0.00 })
+                            );
+                        });
+                        appData.appointments = appData.appointments.map(a => ({ 
+                            ...a, 
+                            procedures: Array.isArray(a.procedures) ? a.procedures : (a.procedure ? [{name: a.procedure, value: a.procedureValue || 0.00}] : []),
+                            totalValue: a.totalValue !== undefined ? Number(a.totalValue) : (Array.isArray(a.procedures) ? a.procedures.reduce((sum,p) => sum + Number(p.value || 0), 0) : (Number(a.procedureValue) || 0)),
+                            concluido: a.concluido || false,
+                            cancelado: a.cancelado || false
+                        }));
+                    } else {
+                        initializeAppDefaultData();
+                    }
+                } catch (e) {
+                    console.error("Erro ao parsear dados:", e);
+                    initializeAppDefaultData();
+                }
+            } else {
+                initializeAppDefaultData();
+            }
+        }
+
+        function initializeAppDefaultData() {
+            appData.professionals = getInitialProfessionalsData();
+            appData.appointments = [];
+            saveAppDataToLocalStorage();
+        }
+
+        function saveAppDataToLocalStorage() {
+            try {
+                localStorage.setItem(APP_DATA_KEY, JSON.stringify(appData));
+            } catch (e) {
+                console.error("Erro ao salvar dados:", e);
+                showStatusMessage("Erro crítico ao salvar dados! Verifique o console.", "error", true);
+                if (e.name === 'QuotaExceededError') {
+                    alert('ERRO: Armazenamento local do navegador está cheio!');
+                }
+            }
+        }
+
+        function showStatusMessage(message, type = 'info', isAdminMessage = false) {
+            const target = isAdminMessage ? adminStatusMessage : statusMessage;
+            target.textContent = message;
+            target.className = '';
+            target.classList.add(type);
+            target.style.display = 'block';
+            setTimeout(() => { target.style.display = 'none'; }, 3500);
+        }
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
+            loginError.textContent = '';
+            const professional = appData.professionals[username];
+            if (professional && professional.password === password) { 
+                loggedInUser = professional;
+                if (professional.isAdmin) showAdminPanel();
+                else showAppSection();
+            } else {
+                loginError.textContent = "Usuário ou senha inválidos.";
+            }
+        });
+        
+        function performLogout() {
+            loggedInUser = null;
+            showLoginSection();
+        }
+
+        logoutButton.addEventListener('click', performLogout);
+        adminLogoutButton.addEventListener('click', performLogout);
+
+
+        function showLoginSection() {
+            loginSection.style.display = 'block';
+            appSection.style.display = 'none';
+            adminPanelSection.style.display = 'none';
+            adminPanelButton.style.display = 'none';
+            loadViewModePreference(); // Garante que os botões de toggle estejam corretos
+        }
+
+        function showAppSection() {
+            loginSection.style.display = 'none';
+            appSection.style.display = 'block';
+            adminPanelSection.style.display = 'none';
+            welcomeMessage.textContent = `${loggedInUser.fullName}`;
+            adminPanelButton.style.display = loggedInUser.isAdmin ? 'inline-block' : 'none';
+            renderProfessionalWorkspace();
+        }
+        
+        function showAdminPanel() {
+            loginSection.style.display = 'none';
+            appSection.style.display = 'none';
+            adminPanelSection.style.display = 'block';
+            adminPanelButton.style.display = 'none'; 
+            populateAdminPanel();
+        }
+
+        adminPanelButton.addEventListener('click', () => {
+            if (loggedInUser && loggedInUser.isAdmin) showAdminPanel();
+        });
+        
+
+        function renderProfessionalWorkspace() {
+            if (!loggedInUser || loggedInUser.isAdmin) {
+                professionalWorkspace.innerHTML = loggedInUser && loggedInUser.isAdmin ? "" : "<p style='text-align:center; padding: 20px; color:var(--text-secondary-feminine);'>Acesse o Painel Admin ou faça login como profissional.</p>";
+                return;
+            }
+
+            professionalWorkspace.innerHTML = `
+                <h3>${loggedInUser.area}</h3>
+                <button id="generateReportButton" class="std-button-feminine primary-action">Gerar Relatório de Ganhos</button>
+                <div id="reportSection" style="display:none;"></div>
+                <h4>Novo Agendamento</h4>
+                <form id="appointmentFormInternal">
+                    <div class="form-grid">
+                        <div><label for="clientName">Nome Cliente:</label><input type="text" id="clientName" required></div>
+                        <div><label for="appointmentDate">Data:</label><input type="date" id="appointmentDate" required></div>
+                        <div><label for="appointmentTime">Hora:</label><input type="time" id="appointmentTime" required></div>
+                        
+                        <div class="form-grid-full-width">
+                            <label>Procedimentos:</label>
+                            <div id="proceduresCheckboxesContainer"></div>
+                            <div id="totalAgendamentoValueDisplay">Valor Total: R$ 0.00</div>
+                        </div>
+                        <div class="form-grid-full-width"><label for="notes">Observações:</label><textarea id="notes"></textarea></div>
+                    </div>
+                    <input type="hidden" id="editingAppointmentId">
+                    <button type="submit" id="saveAppointmentButtonInternal" class="std-button-feminine primary-action">Salvar Agendamento</button>
+                </form>
+                <div class="appointments-list">
+                    <h4>Seus Agendamentos</h4>
+                    <div id="appointmentsContainerInternal"></div>
+                </div>
+            `;
+
+            const appointmentFormInternal = document.getElementById('appointmentFormInternal');
+            populateProcedureCheckboxes();
+            
+            document.getElementById('generateReportButton').addEventListener('click', generateAndDisplayEarningsReport);
+            appointmentFormInternal.addEventListener('submit', handleAppointmentFormSubmit);
+            renderAppointmentsList();
+        }
+
+        function populateProcedureCheckboxes(selectedProcedures = []) {
+            const container = document.getElementById('proceduresCheckboxesContainer');
+            const totalDisplay = document.getElementById('totalAgendamentoValueDisplay');
+            if (!container || !loggedInUser) return;
+            container.innerHTML = '';
+
+            loggedInUser.procedures.forEach(proc => {
+                const itemId = `proc-${proc.name.replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2,7)}`; // ID mais único
+                const isChecked = selectedProcedures.some(p => p.name === proc.name);
+
+                const div = document.createElement('div');
+                div.classList.add('procedure-checkbox-item');
+                div.innerHTML = `
+                    <input type="checkbox" id="${itemId}" name="procedures" value="${proc.name}" data-value="${proc.value}" ${isChecked ? 'checked' : ''}>
+                    <label for="${itemId}">${proc.name} <span class="procedure-value-text">(R$ ${Number(proc.value).toFixed(2)})</span></label>
+                `;
+                container.appendChild(div);
+            });
+            
+            const checkboxes = container.querySelectorAll('input[type="checkbox"][name="procedures"]');
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', updateTotalAgendamentoValue);
+            });
+            updateTotalAgendamentoValue(); 
+        }
+
+        function updateTotalAgendamentoValue() {
+            const container = document.getElementById('proceduresCheckboxesContainer');
+            const totalDisplay = document.getElementById('totalAgendamentoValueDisplay');
+            if (!container || !totalDisplay) return;
+
+            let currentTotal = 0;
+            const checkboxes = container.querySelectorAll('input[type="checkbox"][name="procedures"]:checked');
+            checkboxes.forEach(cb => {
+                currentTotal += parseFloat(cb.dataset.value || 0);
+            });
+            totalDisplay.textContent = `Valor Total: R$ ${currentTotal.toFixed(2)}`;
+            return currentTotal;
+        }
+
+
+        function handleAppointmentFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const clientName = form.clientName.value.trim();
+            const date = form.appointmentDate.value;
+            const time = form.appointmentTime.value;
+            const notes = form.notes.value.trim();
+            const editingId = form.editingAppointmentId.value;
+
+            const selectedProcedureElements = document.querySelectorAll('#proceduresCheckboxesContainer input[name="procedures"]:checked');
+            const selectedProcedures = Array.from(selectedProcedureElements).map(cb => {
+                return {
+                    name: cb.value,
+                    value: parseFloat(cb.dataset.value || 0)
+                };
+            });
+
+            if (!clientName || !date || !time || selectedProcedures.length === 0) {
+                alert("Preencha Cliente, Data, Hora e selecione ao menos um Procedimento."); return;
+            }
+            
+            const totalValue = selectedProcedures.reduce((sum, proc) => sum + proc.value, 0);
+
+            if (editingId) {
+                const index = appData.appointments.findIndex(app => app.id === editingId);
+                if (index > -1) {
+                    appData.appointments[index] = {
+                        ...appData.appointments[index], clientName, date, time, 
+                        procedures: selectedProcedures, 
+                        totalValue: totalValue,
+                        notes,
+                    };
+                }
+                form.saveAppointmentButtonInternal.textContent = 'Salvar Agendamento';
+            } else {
+                appData.appointments.push({
+                    id: 'app-' + Date.now() + '-' + Math.random().toString(36).substring(2,7),
+                    professional: loggedInUser.id, clientName, date, time,
+                    procedures: selectedProcedures,
+                    totalValue: totalValue,
+                    notes, concluido: false, cancelado: false
+                });
+            }
+            saveAppDataToLocalStorage();
+            renderAppointmentsList();
+            form.reset(); 
+            document.querySelectorAll('#proceduresCheckboxesContainer input[name="procedures"]').forEach(cb => cb.checked = false); 
+            updateTotalAgendamentoValue(); 
+            form.editingAppointmentId.value = '';
+            showStatusMessage("Agendamento salvo!", "success");
+        }
+
+        function renderAppointmentsList() {
+            const container = document.getElementById('appointmentsContainerInternal');
+            if (!container || !loggedInUser || loggedInUser.isAdmin) return;
+            container.innerHTML = '';
+
+            const userAppointments = appData.appointments
+                .filter(app => app.professional === loggedInUser.id)
+                .sort((a, b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time));
+
+            if (userAppointments.length === 0) {
+                container.innerHTML = '<p style="text-align: center; padding:15px; color:var(--text-secondary-feminine);">Nenhum agendamento.</p>';
+                return;
+            }
+
+            userAppointments.forEach(app => {
+                const item = document.createElement('div');
+                item.classList.add('appointment-item');
+                if (app.concluido) item.classList.add('concluido');
+                if (app.cancelado) item.classList.add('cancelado');
+                
+                let proceduresHTML = '<ul class="procedure-list-display">';
+                (app.procedures || []).forEach(p => {
+                    proceduresHTML += `<li>${p.name} <span class="procedure-value-text">(R$ ${Number(p.value).toFixed(2)})</span></li>`;
+                });
+                proceduresHTML += '</ul>';
+                const totalValueDisplay = app.totalValue !== undefined ? `<p class="total-value-display">Total: R$ ${Number(app.totalValue).toFixed(2)}</p>` : '';
+
+
+                item.innerHTML = `
+                    <div class="appointment-details">
+                        <p><strong>Cliente:</strong> ${app.clientName}</p>
+                        <p><strong>Data:</strong> ${new Date(app.date + 'T00:00:00').toLocaleDateString('pt-BR')} <strong>Hora:</strong> ${app.time}</p>
+                        <p><strong>Procedimentos:</strong></p>
+                        ${proceduresHTML}
+                        ${totalValueDisplay}
+                        ${app.notes ? `<p><strong>Obs:</strong> <i>${app.notes}</i></p>` : ''}
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="edit-btn" data-id="${app.id}" ${app.concluido || app.cancelado ? 'disabled' : ''}>Editar</button>
+                        <button class="delete-btn" data-id="${app.id}">Excluir</button>
+                        <button class="toggle-concluido-btn ${app.concluido ? 'concluido' : ''}" data-id="${app.id}" ${app.cancelado ? 'disabled' : ''}>
+                            ${app.concluido ? 'Reabrir' : 'Concluir'}
+                        </button>
+                        <button class="toggle-cancelado-btn ${app.cancelado ? 'cancelado' : ''}" data-id="${app.id}" ${app.concluido ? 'disabled' : ''}>
+                            ${app.cancelado ? 'Reativar' : 'Cancelar'}
+                        </button>
+                    </div>`;
+                container.appendChild(item);
+            });
+
+            container.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', handleEditAppointment));
+            container.querySelectorAll('.delete-btn').forEach(b => b.addEventListener('click', handleDeleteAppointment));
+            container.querySelectorAll('.toggle-concluido-btn').forEach(b => b.addEventListener('click', handleToggleConcluido));
+            container.querySelectorAll('.toggle-cancelado-btn').forEach(b => b.addEventListener('click', handleToggleCancelado));
+        }
+
+        function handleEditAppointment(event) {
+            const appointmentId = event.target.dataset.id;
+            const appToEdit = appData.appointments.find(app => app.id === appointmentId);
+            const form = document.getElementById('appointmentFormInternal');
+            if (appToEdit && form) {
+                form.clientName.value = appToEdit.clientName;
+                form.appointmentDate.value = appToEdit.date;
+                form.appointmentTime.value = appToEdit.time;
+                form.notes.value = appToEdit.notes || '';
+                form.editingAppointmentId.value = appointmentId;
+                form.saveAppointmentButtonInternal.textContent = 'Atualizar Agendamento';
+                
+                const selectedProceduresForEdit = appToEdit.procedures || [];
+                populateProcedureCheckboxes(selectedProceduresForEdit); 
+                
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function handleDeleteAppointment(event) {
+            const appointmentId = event.target.dataset.id;
+            if (confirm("Excluir este agendamento?")) {
+                appData.appointments = appData.appointments.filter(app => app.id !== appointmentId);
+                saveAppDataToLocalStorage();
+                renderAppointmentsList();
+                showStatusMessage("Agendamento excluído.", "info");
+            }
+        }
+
+        function handleToggleConcluido(event) {
+            const appointmentId = event.target.dataset.id;
+            const index = appData.appointments.findIndex(app => app.id === appointmentId);
+            if (index > -1) {
+                if (appData.appointments[index].cancelado) {
+                    showStatusMessage("Não pode concluir um serviço cancelado. Reative-o primeiro.", "error"); return;
+                }
+                appData.appointments[index].concluido = !appData.appointments[index].concluido;
+                saveAppDataToLocalStorage();
+                renderAppointmentsList();
+                showStatusMessage(`Agendamento ${appData.appointments[index].concluido ? 'concluído' : 'reaberto'}.`, "info");
+            }
+        }
+        
+        function handleToggleCancelado(event) {
+            const appointmentId = event.target.dataset.id;
+            const index = appData.appointments.findIndex(app => app.id === appointmentId);
+            if (index > -1) {
+                if (appData.appointments[index].concluido) {
+                    showStatusMessage("Não pode cancelar um serviço concluído. Reabra-o primeiro.", "error"); return;
+                }
+                appData.appointments[index].cancelado = !appData.appointments[index].cancelado;
+                saveAppDataToLocalStorage();
+                renderAppointmentsList();
+                showStatusMessage(`Agendamento ${appData.appointments[index].cancelado ? 'cancelado' : 'reativado'}.`, "info");
+            }
+        }
+
+        function generateAndDisplayEarningsReport() {
+            const reportSection = document.getElementById('reportSection');
+            if (!reportSection || !loggedInUser || loggedInUser.isAdmin) return;
+
+            const professionalAppointments = appData.appointments.filter(
+                app => app.professional === loggedInUser.id && app.concluido && !app.cancelado
+            );
+
+            if (professionalAppointments.length === 0) {
+                reportSection.innerHTML = "<h5>Relatório de Ganhos</h5><p>Nenhum serviço concluído para gerar relatório.</p>";
+                reportSection.style.display = 'block';
+                return;
+            }
+
+            let granTotalGanhos = 0;
+            let reportHTML = `
+                <h5>Relatório de Ganhos - ${loggedInUser.fullName}</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Data/Hora</th>
+                            <th>Procedimentos</th>
+                            <th>Valor Total (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            professionalAppointments.sort((a,b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time))
+                .forEach(app => {
+                const dataHora = new Date(app.date + 'T' + app.time).toLocaleString('pt-BR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+                const valorTotalDoAgendamento = Number(app.totalValue) || 0;
+                granTotalGanhos += valorTotalDoAgendamento;
+                
+                let proceduresListHTML = "<ul class='procedure-list-display'>"; // Adicionada classe para estilização se necessário
+                (app.procedures || []).forEach(p => {
+                    proceduresListHTML += `<li>${p.name} <span class="procedure-value-text">(R$ ${Number(p.value).toFixed(2)})</span></li>`;
+                });
+                proceduresListHTML += "</ul>";
+
+                reportHTML += `
+                    <tr>
+                        <td>${app.clientName}</td>
+                        <td>${dataHora}</td>
+                        <td>${proceduresListHTML}</td>
+                        <td>${valorTotalDoAgendamento.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            reportHTML += `
+                    </tbody>
+                </table>
+                <div class="total-ganhos">Total Geral de Ganhos: R$ ${granTotalGanhos.toFixed(2)}</div>
+            `;
+            reportSection.innerHTML = reportHTML;
+            reportSection.style.display = 'block';
+        }
+
+        // --- Funções do Painel Admin ---
+        function populateAdminPanel() {
+            if (!loggedInUser || !loggedInUser.isAdmin) return;
+            renderManageProfessionals();
+            populateProfessionalSelectForProcedures();
+            const selectProfForProc = document.getElementById('selectProfessionalForProcedures');
+            selectProfForProc.removeEventListener('change', handleAdminSelectProfChange); 
+            selectProfForProc.addEventListener('change', handleAdminSelectProfChange);
+            
+            const firstProfId = Object.keys(appData.professionals).find(id => !appData.professionals[id].isAdmin);
+            if (firstProfId) {
+                selectProfForProc.value = firstProfId;
+                renderManageProcedures(firstProfId);
+            } else {
+                 document.getElementById('manageProceduresContainer').innerHTML = "<p style='color:var(--text-secondary-feminine);'>Nenhuma profissional cadastrada.</p>";
+            }
+        }
+        function handleAdminSelectProfChange(e) {
+            renderManageProcedures(e.target.value);
+        }
+
+
+        const addProfessionalForm = document.getElementById('addProfessionalForm');
+        addProfessionalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = addProfessionalForm.newProfId.value.trim();
+            const fullName = addProfessionalForm.newProfFullName.value.trim();
+            const password = addProfessionalForm.newProfPassword.value;
+            const area = addProfessionalForm.newProfArea.value;
+
+            if (!id || !fullName || !password) {
+                showStatusMessage("Preencha ID, Nome e Senha.", "error", true); return;
+            }
+            if (appData.professionals[id]) {
+                showStatusMessage("ID de profissional já existe.", "error", true); return;
+            }
+            appData.professionals[id] = { id, fullName, password, area, isAdmin: false, procedures: [] };
+            saveAppDataToLocalStorage();
+            renderManageProfessionals();
+            populateProfessionalSelectForProcedures();
+            addProfessionalForm.reset();
+            showStatusMessage("Profissional adicionada!", "success", true);
+        });
+
+        function renderManageProfessionals() {
+            const container = document.getElementById('manageProfessionalsContainer');
+            container.innerHTML = '<ul>'; 
+            Object.values(appData.professionals).filter(p => !p.isAdmin).forEach(prof => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${prof.fullName} (ID: ${prof.id}, Área: ${prof.area})</span>
+                    <div>
+                        <input type="text" value="${prof.fullName}" data-id="${prof.id}" placeholder="Novo nome" style="max-width: 200px;">
+                        <button data-id="${prof.id}" class="save-prof-name-btn std-button-feminine admin">Salvar Nome</button>
+                    </div>
+                `;
+                container.querySelector('ul').appendChild(li);
+            });
+            container.querySelectorAll('.save-prof-name-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const profId = e.target.dataset.id;
+                    const newNameInput = container.querySelector(`input[type="text"][data-id="${profId}"]`);
+                    if (newNameInput && newNameInput.value.trim() && appData.professionals[profId]) {
+                        appData.professionals[profId].fullName = newNameInput.value.trim();
+                        saveAppDataToLocalStorage();
+                        renderManageProfessionals();
+                        populateProfessionalSelectForProcedures();
+                        showStatusMessage("Nome atualizado.", "success", true);
+                    }
+                });
+            });
+        }
+
+        function populateProfessionalSelectForProcedures() {
+            const select = document.getElementById('selectProfessionalForProcedures');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- Selecione Profissional --</option>';
+            Object.values(appData.professionals).filter(p => !p.isAdmin).forEach(prof => {
+                const option = document.createElement('option');
+                option.value = prof.id;
+                option.textContent = prof.fullName;
+                select.appendChild(option);
+            });
+            if (appData.professionals[currentVal] && !appData.professionals[currentVal].isAdmin) {
+                select.value = currentVal;
+            }
+        }
+
+        function renderManageProcedures(profId) {
+            const container = document.getElementById('manageProceduresContainer');
+            container.innerHTML = '';
+            const professional = appData.professionals[profId];
+
+            if (!professional || professional.isAdmin) {
+                container.innerHTML = "<p style='color:var(--text-secondary-feminine);'>Selecione uma profissional.</p>"; return;
+            }
+
+            const ul = document.createElement('ul');
+            if (professional.procedures.length === 0) {
+                ul.innerHTML = "<li>Nenhum procedimento cadastrado.</li>";
+            } else {
+                professional.procedures.forEach((proc, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${proc.name}</span>
+                        <div>
+                            R$ <input type="number" class="procedure-value-input" value="${Number(proc.value).toFixed(2)}" step="0.01" min="0" data-prof-id="${profId}" data-proc-index="${index}">
+                            <button class="save-proc-value-btn std-button-feminine admin" data-prof-id="${profId}" data-proc-index="${index}">Salvar</button>
+                            <button class="delete-proc-btn std-button-feminine danger" data-prof-id="${profId}" data-proc-index="${index}">Excluir</button>
+                        </div>
+                    `;
+                    ul.appendChild(li);
+                });
+            }
+            container.appendChild(ul);
+            container.querySelectorAll('.save-proc-value-btn').forEach(b => b.addEventListener('click', saveProcedureValue));
+            container.querySelectorAll('.delete-proc-btn').forEach(b => b.addEventListener('click', deleteProcedure));
+        }
+        
+        function saveProcedureValue(event) {
+            const profId = event.target.dataset.profId;
+            const procIndex = parseInt(event.target.dataset.procIndex);
+            const professional = appData.professionals[profId];
+            const valueInput = document.querySelector(`.procedure-value-input[data-prof-id="${profId}"][data-proc-index="${procIndex}"]`);
+
+            if (professional && professional.procedures[procIndex] && valueInput) {
+                const newValue = parseFloat(valueInput.value);
+                if (!isNaN(newValue) && newValue >= 0) {
+                    professional.procedures[procIndex].value = newValue;
+                    saveAppDataToLocalStorage();
+                    showStatusMessage("Valor atualizado!", "success", true);
+                    renderManageProcedures(profId);
+                } else {
+                    showStatusMessage("Valor inválido.", "error", true);
+                }
+            }
+        }
+        
+        function deleteProcedure(event) {
+            const profId = event.target.dataset.profId;
+            const procIndex = parseInt(event.target.dataset.procIndex);
+            const professional = appData.professionals[profId];
+
+            if (professional && professional.procedures[procIndex]) {
+                if (confirm(`Excluir "${professional.procedures[procIndex].name}" para ${professional.fullName}?`)) {
+                    professional.procedures.splice(procIndex, 1);
+                    saveAppDataToLocalStorage();
+                    renderManageProcedures(profId);
+                    showStatusMessage("Procedimento excluído.", "info", true);
+                }
+            }
+        }
+
+        const addProcedureToProfessionalForm = document.getElementById('addProcedureToProfessionalForm');
+        addProcedureToProfessionalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const selectedProfId = document.getElementById('selectProfessionalForProcedures').value;
+            const procedureName = addProcedureToProfessionalForm.newProcedureName.value.trim();
+            const procedureValue = parseFloat(addProcedureToProfessionalForm.newProcedureValue.value);
+
+            if (!selectedProfId) { showStatusMessage("Selecione uma profissional.", "error", true); return; }
+            if (!procedureName) { showStatusMessage("Nome do procedimento é obrigatório.", "error", true); return; }
+            if (isNaN(procedureValue) || procedureValue < 0) { showStatusMessage("Valor inválido.", "error", true); return; }
+
+            const professional = appData.professionals[selectedProfId];
+            if (professional && !professional.isAdmin) {
+                if (professional.procedures.find(p => p.name.toLowerCase() === procedureName.toLowerCase())) {
+                    showStatusMessage("Procedimento já existe.", "error", true); return;
+                }
+                professional.procedures.push({ name: procedureName, value: procedureValue });
+                saveAppDataToLocalStorage();
+                renderManageProcedures(selectedProfId);
+                addProcedureToProfessionalForm.reset();
+                addProcedureToProfessionalForm.newProcedureValue.value = "0.00";
+                showStatusMessage("Procedimento adicionado!", "success", true);
+            }
+        });
+
+        const exportDataButton = document.getElementById('exportDataButton');
+        exportDataButton.addEventListener('click', () => {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = `espaco_bezerra_backup_${new Date().toISOString().slice(0,10)}.json`;
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            showStatusMessage("Backup exportado. Salve o arquivo JSON.", "success", true);
+        });
+
+        const importDataButton = document.getElementById('importDataButton');
+        const importDataFile = document.getElementById('importDataFile');
+        importDataButton.addEventListener('click', () => {
+            const file = importDataFile.files[0];
+            if (!file) { showStatusMessage("Selecione um arquivo.", "error", true); return; }
+            if (!confirm("ATENÇÃO: Isso substituirá TODOS os dados atuais. Continuar?")) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    if (importedData && typeof importedData.professionals === 'object' && Array.isArray(importedData.appointments)) {
+                        appData = importedData;
+                        saveAppDataToLocalStorage();
+                        loadAppDataFromLocalStorage(); 
+                        
+                        if (loggedInUser && loggedInUser.isAdmin && appData.professionals[loggedInUser.id] && appData.professionals[loggedInUser.id].isAdmin) {
+                             populateAdminPanel();
+                        } else {
+                            loggedInUser = null; 
+                            showLoginSection();
+                        }
+                        showStatusMessage("Dados importados com sucesso!", "success", true);
+                    } else {
+                        showStatusMessage("Arquivo de backup inválido.", "error", true);
+                    }
+                } catch (e) {
+                    showStatusMessage("Erro ao processar arquivo.", "error", true);
+                }
+            };
+            reader.readAsText(file);
+            importDataFile.value = '';
+        });
+
+        // --- Inicialização da Aplicação ---
+        loadAppDataFromLocalStorage();
+        loadViewModePreference(); // Carrega a preferência de visualização
+        showLoginSection(); // Começa sempre na tela de login
+
+    </script>
+</body>
+</html>
+
