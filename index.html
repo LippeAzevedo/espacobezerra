@@ -59,7 +59,7 @@
             font-size: 15px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transition: padding 0.3s ease; /* Para transição suave no modo mobile */
+            transition: padding 0.3s ease; 
         }
 
         .container {
@@ -96,23 +96,19 @@
 
         .login-section, .app-section, .admin-panel-section { display: none; }
 
-        /* Botões de Alternância de Visualização */
         .view-toggle-buttons {
             text-align: center;
             margin-bottom: 20px;
         }
         .view-toggle-buttons button {
-            /* Usar classe .std-button-feminine */
             margin: 0 5px;
             font-size: 13px;
             padding: 6px 12px;
         }
 
-
-        /* Estilos de Login Feminino */
         .login-section form {
             display: flex; flex-direction: column; gap: 18px; max-width: 380px;
-            margin: 20px auto; /* Margem superior reduzida por causa dos botões de toggle */
+            margin: 20px auto; 
             padding: 35px; border-radius: 12px;
             background-color: var(--bg-element-feminine);
             border: 1px solid var(--border-color-feminine);
@@ -154,7 +150,6 @@
             font-size: 14px; font-weight: 500;
         }
 
-        /* Cabeçalho da App Feminino */
         .app-header {
             display: flex; justify-content: space-between; align-items: center;
             flex-wrap: wrap; gap: 12px; margin-bottom: 25px; padding-bottom: 15px;
@@ -166,7 +161,6 @@
         }
         .app-header-actions { display: flex; gap: 10px; }
         
-        /* Botões Padrão (Estilo Feminino) */
         .std-button-feminine {
             padding: 8px 18px;
             color: var(--rose-gold-accent);
@@ -241,7 +235,6 @@
         #adminPanelButton:hover { background-color: rgba(216, 191, 216, 0.15); transform: translateY(-1px); }
 
 
-        /* Seção Profissional (Agendamentos) Feminino */
         .professional-section h3 { 
             font-family: var(--font-display); color: var(--rose-gold-accent);
             font-size: 22px; font-weight: 600;
@@ -252,7 +245,7 @@
             font-family: var(--font-body); font-weight: 600; color: var(--text-primary-feminine);
             margin-top: 25px; margin-bottom: 15px; font-size: 18px;
         }
-        #appointmentForm { 
+        #appointmentForm, #changePasswordSection { 
             background-color: var(--bg-element-feminine); padding: 25px;
             border-radius: 12px; margin-bottom: 30px;
             border: 1px solid var(--border-color-feminine);
@@ -260,15 +253,17 @@
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .form-grid-full-width { grid-column: 1 / -1; } 
 
-        .form-grid label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: var(--text-primary-feminine); }
+        .form-grid label, #changePasswordSection label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: var(--text-primary-feminine); }
         .form-grid input[type="text"], .form-grid input[type="date"], .form-grid input[type="time"], 
-        .form-grid select, .form-grid textarea, .form-grid input[type="number"] {
+        .form-grid select, .form-grid textarea, .form-grid input[type="number"],
+        #changePasswordSection input[type="password"] {
             width: 100%; padding: 10px 14px; border: 1px solid var(--input-border-feminine);
             border-radius: 8px; box-sizing: border-box; font-family: var(--font-body);
             font-size: 15px; background-color: var(--input-bg-feminine);
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
+        .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus,
+        #changePasswordSection input[type="password"]:focus {
             border-color: var(--input-focus-border-feminine);
             box-shadow: 0 0 0 3px rgba(230, 164, 180, 0.3);
             outline: none;
@@ -291,7 +286,6 @@
             display: block; text-align: right; padding: 5px 0;
         }
         
-        /* Lista de Agendamentos Feminino */
         .appointments-list { margin-top: 30px; }
         .appointment-item {
             background-color: var(--bg-window-feminine); padding: 18px; border-radius: 10px;
@@ -342,7 +336,6 @@
         .appointment-item .toggle-cancelado-btn.cancelado:hover { background-color: #f0a030; }
 
 
-        /* Relatório de Ganhos Feminino */
         #generateReportButton { 
             margin-top: 20px; margin-bottom: 15px;
         }
@@ -353,6 +346,13 @@
         #reportSection th { background-color: rgba(248, 180, 196, 0.15); font-weight: 600; color: var(--rose-gold-accent); }
         #reportSection tr:last-child td { border-bottom: none; }
         #reportSection .total-ganhos { font-weight: 600; font-size: 17px; margin-top: 18px; text-align: right; color: var(--rose-gold-accent); }
+
+        #changePasswordSection { display:none; margin-top: 30px;}
+        #changePasswordSection h4 {font-family: var(--font-body); font-weight: 600; color: var(--text-primary-feminine); font-size: 18px; margin-bottom: 15px;}
+        #changePasswordForm div { margin-bottom: 15px; }
+        #changePasswordStatus { margin-top:15px; font-weight:500; font-size: 14px; }
+        #changePasswordStatus.success { color: var(--success-color-feminine); }
+        #changePasswordStatus.error { color: var(--error-color-feminine); }
 
 
         /* Painel do Administrador Feminino */
@@ -403,7 +403,6 @@
         #adminLogoutButton { display:block; margin: 25px auto 0 auto; width: fit-content; }
 
 
-        /* Mensagens de Status Feminino */
         #statusMessage, #adminStatusMessage {
             padding: 12px 18px; text-align: center; font-weight: 500;
             border-radius: 8px; margin: 18px auto; display: none;
@@ -414,30 +413,19 @@
         #statusMessage.error, #adminStatusMessage.error { background-color: rgba(255, 105, 97, 0.15); color: var(--error-color-feminine); border-color: rgba(255, 105, 97, 0.3); }
         #statusMessage.info, #adminStatusMessage.info { background-color: rgba(174, 198, 207, 0.2); color: #5a788a; border-color: rgba(174, 198, 207, 0.4); }
 
-        /* Estilos para Visualização Mobile */
         body.mobile-view-active {
-            font-size: 16px; /* Aumenta um pouco a fonte base para mobile */
-            padding: 0; /* Remove padding do body se houver */
+            font-size: 16px; 
+            padding: 0; 
         }
         body.mobile-view-active .container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0;
-            padding: 15px; /* Padding interno do container no mobile */
-            border-radius: 0;
-            box-shadow: none;
-            border-left: none;
-            border-right: none;
+            width: 100%; max-width: 100%; margin: 0; padding: 15px; 
+            border-radius: 0; box-shadow: none; border-left: none; border-right: none;
         }
         body.mobile-view-active header h1 { font-size: 28px; }
         body.mobile-view-active header p { font-size: 15px; }
         body.mobile-view-active .login-section form {
-            max-width: 100%;
-            padding: 20px;
-            margin: 10px auto;
-            box-shadow: none;
-            border: none;
-            background-color: var(--bg-window-feminine); /* Para não ter fundo duplo */
+            max-width: 100%; padding: 20px; margin: 10px auto;
+            box-shadow: none; border: none; background-color: var(--bg-window-feminine);
         }
         body.mobile-view-active .app-header { flex-direction: column; align-items: flex-start; }
         body.mobile-view-active .app-header-actions { width: 100%; margin-top:10px; justify-content: space-around; }
@@ -448,30 +436,31 @@
 
         body.mobile-view-active .appointment-item { flex-direction: column; align-items: stretch; }
         body.mobile-view-active .appointment-actions { 
-            flex-direction: row; 
-            flex-wrap: wrap; /* Permite quebrar linha se não couber */
+            flex-direction: column; /* Empilhar botões de ação no mobile para mais fácil toque */
+            align-items: stretch; /* Esticar botões para preencher largura */
             margin-left: 0; 
             margin-top: 15px; 
             width: 100%; 
-            justify-content: space-around; /* Distribui botões */
         }
         body.mobile-view-active .appointment-actions button { 
-            /* flex-grow: 1;  Removido para não esticar demais */
-            margin-bottom: 5px; /* Espaço se quebrar linha */
-            padding: 8px 10px; /* Ajuste de padding para mobile */
+            margin-bottom: 8px; /* Espaço entre botões empilhados */
+            padding: 10px 12px; /* Aumentar padding para toque */
         }
+        body.mobile-view-active .appointment-actions button:last-child { margin-bottom: 0; }
         
         body.mobile-view-active .admin-section { padding: 15px; }
         body.mobile-view-active .admin-section li { flex-direction: column; align-items: flex-start;}
-        body.mobile-view-active .admin-section li div { margin-top: 8px; width: 100%; display: flex; justify-content: space-between; align-items: center; }
-        body.mobile-view-active .admin-section .procedure-item input[type="number"] { width: 70px; }
+        body.mobile-view-active .admin-section li div { margin-top: 8px; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+        body.mobile-view-active .admin-section li div input[type="text"],
+        body.mobile-view-active .admin-section li div input[type="number"] { width: 100%; max-width: none; }
+        body.mobile-view-active .admin-section li div button { width: 100%; margin-left: 0 !important;}
+
         body.mobile-view-active #addProcedureToProfessionalForm { flex-direction: column; align-items: stretch;}
         body.mobile-view-active #addProcedureToProfessionalForm div { width: 100%; }
         body.mobile-view-active #addProcedureToProfessionalForm button { width: 100%; margin-top: 10px; }
 
 
-        @media (max-width: 768px) { /* Estilos padrão para mobile, que serão sobrescritos se mobile-view-active não estiver presente */
-            /* Alguns estilos já estão aqui, mas a classe mobile-view-active dará controle explícito */
+        @media (max-width: 768px) { 
         }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -575,7 +564,7 @@
 
     <script>
         const APP_DATA_KEY = 'espacoBezerraAppData_v9_view_toggle'; 
-        const VIEW_MODE_KEY = 'espacoBezerraViewMode'; // Chave para salvar a preferência de visualização
+        const VIEW_MODE_KEY = 'espacoBezerraViewMode';
 
         function getInitialProfessionalsData() {
             return {
@@ -591,7 +580,8 @@
                         { name: "Design de Sobrancelhas com Henna", value: 45.00 },
                         { name: "Brow Lamination", value: 120.00 },
                         { name: "Lash Lifting", value: 100.00 },
-                        { name: "Micropigmentação Labial", value: 350.00 }
+                        { name: "Micropigmentação Labial", value: 350.00 },
+                        { name: "Tintura de Sobrancelhas", value: 35.00 }
                     ]
                 },
                 "Deisyane": {
@@ -602,7 +592,8 @@
                         { name: "Manicure com Esmaltação em Gel", value: 60.00 },
                         { name: "Pedicure Simples", value: 30.00 },
                         { name: "Spa dos Pés", value: 50.00 },
-                        { name: "Alongamento Fibra de Vidro", value: 180.00 }
+                        { name: "Alongamento Fibra de Vidro", value: 180.00 },
+                        { name: "Blindagem de Unhas", value: 70.00 }
                     ]
                 }
             };
@@ -627,8 +618,7 @@
         const switchToDesktopViewButton = document.getElementById('switchToDesktopViewButton');
 
 
-        // --- Gerenciamento de Visualização (Mobile/Desktop) ---
-        function setViewMode(mode) { // mode pode ser 'mobile' ou 'desktop'
+        function setViewMode(mode) { 
             if (mode === 'mobile') {
                 document.body.classList.add('mobile-view-active');
                 switchToMobileViewButton.style.display = 'none';
@@ -644,18 +634,13 @@
 
         function loadViewModePreference() {
             const preferredMode = localStorage.getItem(VIEW_MODE_KEY);
-            if (preferredMode === 'mobile') {
-                setViewMode('mobile');
-            } else {
-                setViewMode('desktop'); // Padrão para desktop
-            }
+            setViewMode(preferredMode === 'mobile' ? 'mobile' : 'desktop');
         }
 
         switchToMobileViewButton.addEventListener('click', () => setViewMode('mobile'));
         switchToDesktopViewButton.addEventListener('click', () => setViewMode('desktop'));
 
 
-        // --- Funções de Persistência e Lógica Principal (como antes) ---
         function loadAppDataFromLocalStorage() {
             const storedData = localStorage.getItem(APP_DATA_KEY);
             if (storedData) {
@@ -744,7 +729,7 @@
             appSection.style.display = 'none';
             adminPanelSection.style.display = 'none';
             adminPanelButton.style.display = 'none';
-            loadViewModePreference(); // Garante que os botões de toggle estejam corretos
+            loadViewModePreference(); 
         }
 
         function showAppSection() {
@@ -777,7 +762,20 @@
 
             professionalWorkspace.innerHTML = `
                 <h3>${loggedInUser.area}</h3>
-                <button id="generateReportButton" class="std-button-feminine primary-action">Gerar Relatório de Ganhos</button>
+                <div style="margin-bottom: 20px;">
+                    <button id="showChangePasswordFormButton" class="std-button-feminine">Alterar Senha</button>
+                    <button id="generateReportButton" class="std-button-feminine primary-action" style="margin-left:10px;">Relatório de Ganhos</button>
+                </div>
+                <div id="changePasswordSectionInternal" style="display:none; margin-bottom: 20px; padding: 20px; background-color: var(--bg-element-feminine); border-radius: 10px; border: 1px solid var(--border-color-feminine);">
+                    <h4>Alterar Senha</h4>
+                    <form id="changePasswordFormInternal">
+                        <div><label for="currentPassword">Senha Atual:</label><input type="password" id="currentPassword" required></div>
+                        <div style="margin-top:10px;"><label for="newPassword">Nova Senha:</label><input type="password" id="newPassword" required></div>
+                        <div style="margin-top:10px;"><label for="confirmNewPassword">Confirmar Nova Senha:</label><input type="password" id="confirmNewPassword" required></div>
+                        <button type="submit" class="std-button-feminine primary-action" style="margin-top:15px;">Salvar Nova Senha</button>
+                        <p id="changePasswordStatus" style="margin-top:10px; font-weight:500;"></p>
+                    </form>
+                </div>
                 <div id="reportSection" style="display:none;"></div>
                 <h4>Novo Agendamento</h4>
                 <form id="appointmentFormInternal">
@@ -801,14 +799,66 @@
                     <div id="appointmentsContainerInternal"></div>
                 </div>
             `;
+            
+            document.getElementById('showChangePasswordFormButton').addEventListener('click', () => {
+                const formSection = document.getElementById('changePasswordSectionInternal');
+                formSection.style.display = formSection.style.display === 'none' ? 'block' : 'none';
+                if(formSection.style.display === 'block') formSection.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+                document.getElementById('changePasswordStatus').textContent = '';
+            });
+            document.getElementById('changePasswordFormInternal').addEventListener('submit', handleChangePasswordSubmit);
 
-            const appointmentFormInternal = document.getElementById('appointmentFormInternal');
             populateProcedureCheckboxes();
             
             document.getElementById('generateReportButton').addEventListener('click', generateAndDisplayEarningsReport);
-            appointmentFormInternal.addEventListener('submit', handleAppointmentFormSubmit);
+            document.getElementById('appointmentFormInternal').addEventListener('submit', handleAppointmentFormSubmit);
             renderAppointmentsList();
         }
+        
+        function handleChangePasswordSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const currentPassword = form.currentPassword.value;
+            const newPassword = form.newPassword.value;
+            const confirmNewPassword = form.confirmNewPassword.value;
+            const statusEl = document.getElementById('changePasswordStatus');
+            statusEl.className = ''; // Limpa classes de status
+
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                statusEl.textContent = "Todos os campos são obrigatórios.";
+                statusEl.classList.add('error');
+                return;
+            }
+            if (newPassword !== confirmNewPassword) {
+                statusEl.textContent = "As novas senhas não coincidem.";
+                statusEl.classList.add('error');
+                return;
+            }
+            if (newPassword.length < 4) { // Validação simples de tamanho
+                statusEl.textContent = "A nova senha deve ter pelo menos 4 caracteres.";
+                statusEl.classList.add('error');
+                return;
+            }
+            // ATENÇÃO: Comparação de senha insegura
+            if (loggedInUser.password !== currentPassword) {
+                statusEl.textContent = "Senha atual incorreta.";
+                statusEl.classList.add('error');
+                return;
+            }
+
+            // Atualiza a senha no objeto appData.professionals
+            appData.professionals[loggedInUser.id].password = newPassword;
+            saveAppDataToLocalStorage();
+            
+            statusEl.textContent = "Senha alterada com sucesso!";
+            statusEl.classList.add('success');
+            form.reset();
+            setTimeout(() => { 
+                document.getElementById('changePasswordSectionInternal').style.display = 'none';
+                statusEl.textContent = ''; 
+            }, 2500);
+        }
+
 
         function populateProcedureCheckboxes(selectedProcedures = []) {
             const container = document.getElementById('proceduresCheckboxesContainer');
@@ -817,7 +867,7 @@
             container.innerHTML = '';
 
             loggedInUser.procedures.forEach(proc => {
-                const itemId = `proc-${proc.name.replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2,7)}`; // ID mais único
+                const itemId = `proc-${proc.name.replace(/\s+/g, '-')}-${Math.random().toString(36).substring(2,7)}`;
                 const isChecked = selectedProcedures.some(p => p.name === proc.name);
 
                 const div = document.createElement('div');
@@ -1053,7 +1103,7 @@
                 const valorTotalDoAgendamento = Number(app.totalValue) || 0;
                 granTotalGanhos += valorTotalDoAgendamento;
                 
-                let proceduresListHTML = "<ul class='procedure-list-display'>"; // Adicionada classe para estilização se necessário
+                let proceduresListHTML = "<ul class='procedure-list-display'>"; 
                 (app.procedures || []).forEach(p => {
                     proceduresListHTML += `<li>${p.name} <span class="procedure-value-text">(R$ ${Number(p.value).toFixed(2)})</span></li>`;
                 });
@@ -1304,8 +1354,8 @@
 
         // --- Inicialização da Aplicação ---
         loadAppDataFromLocalStorage();
-        loadViewModePreference(); // Carrega a preferência de visualização
-        showLoginSection(); // Começa sempre na tela de login
+        loadViewModePreference(); 
+        showLoginSection(); 
 
     </script>
 </body>
