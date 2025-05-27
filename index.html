@@ -221,6 +221,13 @@
         .std-button-feminine.success-button:hover{
             background-color: #68d368; 
         }
+         .std-button-feminine.info-button {
+            color: var(--info-color-feminine);
+            border-color: var(--info-color-feminine);
+        }
+        .std-button-feminine.info-button:hover {
+            background-color: rgba(174, 198, 207, 0.15);
+        }
 
 
         #logoutButton { 
@@ -359,9 +366,9 @@
 
 
         /* Relatório de Ganhos */
-        .report-controls { margin-bottom: 15px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
-        .report-controls label { font-weight: 500; }
-        .report-controls input[type="month"], .report-controls input[type="date"] {
+        .report-controls-container { margin-bottom: 15px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+        .report-controls-container label { font-weight: 500; }
+        .report-controls-container input[type="month"], .report-controls-container input[type="date"], .report-controls-container select {
             padding: 8px 10px; border: 1px solid var(--input-border-feminine); border-radius: 8px;
             font-family: var(--font-body); font-size: 14px;
         }
@@ -486,6 +493,8 @@
         body.mobile-view-active #addProcedureToProfessionalForm { flex-direction: column; align-items: stretch;}
         body.mobile-view-active #addProcedureToProfessionalForm div { width: 100%; }
         body.mobile-view-active #addProcedureToProfessionalForm button { width: 100%; margin-top: 10px; }
+        body.mobile-view-active .report-controls-container {flex-direction:column; align-items:stretch;}
+        body.mobile-view-active .report-controls-container > * {width:100%; margin-bottom:10px;}
 
 
         @media (max-width: 768px) { 
@@ -593,7 +602,7 @@
     </div>
 
     <script>
-        const APP_DATA_KEY = 'espacoBezerraAppData_v12_desconto_permuta'; 
+        const APP_DATA_KEY = 'espacoBezerraAppData_v13_star_reports_fixed'; 
         const VIEW_MODE_KEY = 'espacoBezerraViewMode';
 
         function getInitialProfessionalsData() {
@@ -613,7 +622,7 @@
                         { name: "Lash Lifting (Lifting de Cílios)", value: 140.00 },
                         { name: "Tintura de Cílios", value: 45.00 },
                         { name: "Extensão de Cílios (Volume Brasileiro)", value: 180.00 },
-                        { name: "Manutenção Extensão de Cílios", value: 100.00 },
+                        { name: "Manutenção Extensão de Cílios (até 21 dias)", value: 100.00 },
                         { name: "Micropigmentação Sobrancelha (Fio a Fio)", value: 480.00 },
                         { name: "Micropigmentação Sobrancelha (Shadow)", value: 450.00 },
                         { name: "Micropigmentação Labial (Revitalização)", value: 500.00 },
@@ -621,7 +630,10 @@
                         { name: "Limpeza de Pele Simples", value: 100.00 },
                         { name: "Limpeza de Pele com Peeling de Diamante", value: 150.00 },
                         { name: "Protocolo Glow Lips", value: 120.00 },
-                        { name: "Remoção de Extensão de Cílios", value: 50.00 }
+                        { name: "Remoção de Extensão de Cílios", value: 50.00 },
+                        { name: "Hidratação Facial Profunda", value: 130.00 },
+                        { name: "Epilação Egípcia (Buço)", value: 25.00 },
+                        { name: "Epilação Egípcia (Rosto Completo)", value: 70.00 }
                     ]
                 },
                 "Deisyane": { 
@@ -645,7 +657,9 @@
                         { name: "Decoração Artística (complexa, por unha)", value: 10.00 },
                         { name: "Unha Encravada (tratamento simples)", value: 40.00 },
                         { name: "Plástica dos Pés", value: 90.00 },
-                        { name: "Reconstrução de Unha (por unha)", value: 20.00 }
+                        { name: "Reconstrução de Unha (por unha)", value: 20.00 },
+                        { name: "Esmaltação Infantil (Mão ou Pé)", value: 15.00 },
+                        { name: "Cutilagem Russa (Manicure)", value: 40.00 }
                     ]
                 }
             };
@@ -711,17 +725,17 @@
                             ...a, 
                             procedures: Array.isArray(a.procedures) ? a.procedures : (a.procedure ? [{name: a.procedure, value: a.procedureValue || 0.00}] : []),
                             totalValue: a.totalValue !== undefined ? Number(a.totalValue) : 0,
-                            isStarClient: a.isStarClient || false, // Nova propriedade
+                            isStarClient: a.isStarClient || false, 
                             discountPercentage: a.discountPercentage !== undefined ? Number(a.discountPercentage) : 0,
                             isPermuta: a.isPermuta || false,
                             permutaValorEstimado: a.permutaValorEstimado !== undefined ? Number(a.permutaValorEstimado) : 0,
                             permutaDescricao: a.permutaDescricao || "",
-                            naoCobrarAdiantamento: a.naoCobrarAdiantamento || false, // Nova propriedade
+                            naoCobrarAdiantamento: a.naoCobrarAdiantamento || false, 
                             finalValue: a.finalValue !== undefined ? Number(a.finalValue) : 0, 
                             concluido: a.concluido || false,
                             cancelado: a.cancelado || false
                         }));
-                        appData.appointments.forEach(a => recalculateFinalValue(a)); // Recalcula para todos
+                        appData.appointments.forEach(a => recalculateFinalValue(a)); 
 
                     } else {
                         initializeAppDefaultData();
@@ -740,13 +754,14 @@
             appointment.totalValue = rawTotal;
             
             let valueAfterStarDiscount = rawTotal;
-            if (appointment.isStarClient) {
+            if (appointment.isStarClient && !appointment.isPermuta) { // Desconto Star não se aplica a permutas
                 valueAfterStarDiscount = rawTotal * 0.80; // 20% de desconto Star
             }
 
             if (appointment.isPermuta) {
                 appointment.finalValue = 0;
-                appointment.discountPercentage = 0; // Permuta anula desconto percentual
+                // O discountPercentage já deve ser 0 se for permuta, mas garantimos aqui
+                appointment.discountPercentage = 0; 
             } else {
                 const discountAmount = valueAfterStarDiscount * (Number(appointment.discountPercentage || 0) / 100);
                 appointment.finalValue = valueAfterStarDiscount - discountAmount;
@@ -858,15 +873,15 @@
                     <button id="showChangePasswordFormButton" class="std-button-feminine">Alterar Senha</button>
                     <button id="generateReportButton" class="std-button-feminine primary-action" style="margin-left:10px;">Relatório de Ganhos</button>
                 </div>
-                <div id="reportControlsContainer" style="margin-bottom:15px; display:none; flex-wrap:wrap; gap:10px; align-items:center;" class="report-controls">
+                <div id="reportControlsContainer" style="display:none;" class="report-controls-container">
                     <label for="reportType">Tipo:</label>
                     <select id="reportType" class="std-button-feminine" style="padding: 8px 12px;">
                         <option value="diario">Diário</option>
                         <option value="mensal">Mensal</option>
-                        <option value="total">Total</option>
+                        <option value="total" selected>Total</option>
                     </select>
-                    <input type="date" id="reportDate" style="display:none;">
-                    <input type="month" id="reportMonth" style="display:none;">
+                    <input type="date" id="reportDateInput" style="display:none;">
+                    <input type="month" id="reportMonthInput" style="display:none;">
                     <button id="downloadReportPdfButton" class="std-button-feminine info-button">Baixar PDF do Relatório</button>
                 </div>
                 <div id="changePasswordSectionInternal" style="display:none; margin-bottom: 20px; padding: 20px; background-color: var(--bg-element-feminine); border-radius: 10px; border: 1px solid var(--border-color-feminine);">
@@ -942,8 +957,8 @@
                 const reportControls = document.getElementById('reportControlsContainer');
                 reportControls.style.display = reportControls.style.display === 'none' ? 'flex' : 'none';
                 if(reportControls.style.display === 'flex') {
-                    setupReportControls();
-                    generateAndDisplayEarningsReport(); // Gera o relatório total por padrão ao abrir
+                    setupReportControls(); // Configura os listeners dos inputs de data/mês
+                    generateAndDisplayEarningsReport(); 
                 } else {
                     document.getElementById('reportSection').style.display = 'none';
                 }
@@ -1029,10 +1044,12 @@
                 permutaDetailsContainer.style.display = 'block';
                 discountInput.value = 0; 
                 discountInput.disabled = true;
-                isStarClientCheckbox.checked = false; // Desconto Star não se aplica com permuta
+                isStarClientCheckbox.checked = false; 
                 isStarClientCheckbox.disabled = true;
             } else {
                 permutaDetailsContainer.style.display = 'none';
+                document.getElementById('permutaValorEstimado').value = ''; // Limpa campos de permuta
+                document.getElementById('permutaDescricao').value = '';
                 discountInput.disabled = false;
                 isStarClientCheckbox.disabled = false;
             }
@@ -1046,7 +1063,7 @@
             const isStarClientCheckbox = document.getElementById('isStarClientCheckbox');
             const isPermutaCheckbox = document.getElementById('isPermutaCheckbox');
 
-            if (!container || !totalDisplay || !discountInput || !isStarClientCheckbox || !isPermutaCheckbox) return;
+            if (!container || !totalDisplay || !discountInput || !isStarClientCheckbox || !isPermutaCheckbox) return {};
 
             let currentRawTotal = 0;
             const checkboxes = container.querySelectorAll('input[type="checkbox"][name="procedures"]:checked');
@@ -1062,7 +1079,7 @@
             discountInput.value = discountPercentage; 
 
             let valueAfterStarDiscount = currentRawTotal;
-            if (isStarClient && !isPermuta) { // Desconto Star só se não for permuta
+            if (isStarClient && !isPermuta) {
                 valueAfterStarDiscount = currentRawTotal * 0.80; // 20% de desconto Star
             }
 
@@ -1071,14 +1088,9 @@
 
             if (isPermuta) {
                 finalTotal = 0;
-                displayText = `Permuta (Valor Estimado a ser preenchido)`;
-                discountInput.disabled = true; 
-                discountInput.value = 0; 
-                isStarClientCheckbox.disabled = true;
-                isStarClientCheckbox.checked = false;
+                displayText = `Permuta (Preencha detalhes abaixo)`;
+                // discountInput e isStarClientCheckbox já foram desabilitados em togglePermutaDetailsAndRecalculate
             } else {
-                discountInput.disabled = false;
-                isStarClientCheckbox.disabled = false;
                 const additionalDiscountAmount = valueAfterStarDiscount * (discountPercentage / 100);
                 finalTotal = valueAfterStarDiscount - additionalDiscountAmount;
                 
@@ -1088,12 +1100,11 @@
                 }
                 if (discountPercentage > 0) {
                     displayText += ` - Desc. Adic. (${discountPercentage}%): R$ ${finalTotal.toFixed(2)}`;
-                }
-                if (!isStarClient && discountPercentage === 0) {
-                     displayText = `Valor Final: R$ ${finalTotal.toFixed(2)}`;
                 } else if (isStarClient && discountPercentage === 0) {
                      displayText = `Subtotal: R$ ${currentRawTotal.toFixed(2)} - Star (20%): R$ ${finalTotal.toFixed(2)}`;
-                } else {
+                } else if (!isStarClient && discountPercentage === 0) {
+                     displayText = `Valor Final: R$ ${finalTotal.toFixed(2)}`;
+                } else { // Caso geral se houver desconto adicional
                      displayText = `Valor Final: R$ ${finalTotal.toFixed(2)}`;
                 }
             }
@@ -1149,7 +1160,7 @@
                 alert("Preencha Cliente, Data, Hora e selecione ao menos um Procedimento."); return;
             }
             
-            const calculationResult = updateTotalAgendamentoValue(); // Pega os valores calculados
+            const calculationResult = updateTotalAgendamentoValue(); 
 
             const appointmentData = {
                 professional: loggedInUser.id, clientName, date, time,
@@ -1213,7 +1224,7 @@
                 if (app.concluido) item.classList.add('concluido');
                 if (app.cancelado) item.classList.add('cancelado');
                 if (app.isPermuta) item.classList.add('permuta');
-                if (app.isStarClient) item.classList.add('star-client-discount');
+                if (app.isStarClient && !app.isPermuta) item.classList.add('star-client-discount');
                 
                 let proceduresHTML = '<ul class="procedure-list-display">';
                 (app.procedures || []).forEach(p => {
@@ -1227,7 +1238,7 @@
                 } else {
                     paymentInfoHTML = `<p class="total-value-display">Valor a Pagar: R$ ${Number(app.finalValue).toFixed(2)}</p>`;
                     if (app.isStarClient) {
-                         paymentInfoHTML += `<p class="star-client-info">✨ Cliente Star! (20% desc. aplicado sobre R$ ${Number(app.totalValue).toFixed(2)})</p>`;
+                         paymentInfoHTML += `<p class="star-client-info">✨ Cliente Star! (Desconto de 20% aplicado sobre R$ ${Number(app.totalValue).toFixed(2)})</p>`;
                     }
                     if (app.discountPercentage > 0) {
                         const valueBeforeAdditionalDiscount = app.isStarClient ? Number(app.totalValue) * 0.8 : Number(app.totalValue);
@@ -1338,33 +1349,37 @@
         // --- Relatórios ---
         function setupReportControls() {
             const reportTypeSelect = document.getElementById('reportType');
-            const reportDateInput = document.getElementById('reportDate');
-            const reportMonthInput = document.getElementById('reportMonth');
+            const reportDateInput = document.getElementById('reportDateInput');
+            const reportMonthInput = document.getElementById('reportMonthInput');
 
-            function updateReportInputs() {
+            function updateReportInputsVisibility() {
                 const type = reportTypeSelect.value;
                 reportDateInput.style.display = type === 'diario' ? 'inline-block' : 'none';
                 reportMonthInput.style.display = type === 'mensal' ? 'inline-block' : 'none';
-                generateAndDisplayEarningsReport(); // Gera ao mudar o tipo
+                generateAndDisplayEarningsReport(); 
             }
 
-            reportTypeSelect.addEventListener('change', updateReportInputs);
+            reportTypeSelect.removeEventListener('change', updateReportInputsVisibility); // Evita duplicados
+            reportDateInput.removeEventListener('change', generateAndDisplayEarningsReport);
+            reportMonthInput.removeEventListener('change', generateAndDisplayEarningsReport);
+
+            reportTypeSelect.addEventListener('change', updateReportInputsVisibility);
             reportDateInput.addEventListener('change', generateAndDisplayEarningsReport);
             reportMonthInput.addEventListener('change', generateAndDisplayEarningsReport);
             
-            // Define valores padrão para os inputs de data/mês
-            const today = new Date().toISOString().slice(0, 10);
-            reportDateInput.value = today;
-            reportMonthInput.value = today.slice(0, 7);
+            const today = new Date();
+            const todayISO = today.toISOString().slice(0, 10);
+            reportDateInput.value = todayISO;
+            reportMonthInput.value = todayISO.slice(0, 7);
 
-            updateReportInputs(); // Chama para configurar a visibilidade inicial
+            updateReportInputsVisibility(); 
         }
 
 
         function getFilteredAppointmentsForReport() {
             const reportType = document.getElementById('reportType').value;
-            const reportDate = document.getElementById('reportDate').value; // YYYY-MM-DD
-            const reportMonth = document.getElementById('reportMonth').value; // YYYY-MM
+            const reportDate = document.getElementById('reportDateInput').value; 
+            const reportMonth = document.getElementById('reportMonthInput').value; 
 
             return appData.appointments.filter(app => {
                 if (app.professional !== loggedInUser.id || !app.concluido || app.cancelado) {
@@ -1395,9 +1410,11 @@
             let granTotalGanhos = 0;
             let permutasCount = 0;
             let permutasValorTotalEstimado = 0;
+            const reportTypeDisplay = document.getElementById('reportType').options[document.getElementById('reportType').selectedIndex].text;
+
 
             let reportHTML = `
-                <h5>Relatório de Ganhos - ${loggedInUser.fullName} (${document.getElementById('reportType').options[document.getElementById('reportType').selectedIndex].text})</h5>
+                <h5>Relatório de Ganhos - ${loggedInUser.fullName} (${reportTypeDisplay})</h5>
                 <table>
                     <thead>
                         <tr>
@@ -1477,28 +1494,42 @@
             
             const margin = 15;
             let currentY = margin + 10;
-            const lineHeight = 7;
-            const smallLineHeight = 5;
+            const lineHeight = 6; // Reduzido para caber mais
+            const smallLineHeight = 4;
             const tableCellPadding = 2;
 
             doc.setFont("helvetica", "bold");
             doc.setFontSize(16);
             doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--rose-gold-accent').trim());
-            const reportTypeDisplay = document.getElementById('reportType').options[document.getElementById('reportType').selectedIndex].text;
-            doc.text(`Relatório de Ganhos (${reportTypeDisplay}) - ${loggedInUser.fullName}`, doc.internal.pageSize.getWidth() / 2, currentY, { align: "center" });
-            currentY += lineHeight * 2;
+            const reportTypeSelect = document.getElementById('reportType');
+            const reportTypeDisplay = reportTypeSelect.options[reportTypeSelect.selectedIndex].text;
+            
+            let dateRangeText = "";
+            if (reportTypeSelect.value === 'diario') {
+                dateRangeText = ` - Data: ${new Date(document.getElementById('reportDateInput').value + 'T00:00:00').toLocaleDateString('pt-BR')}`;
+            } else if (reportTypeSelect.value === 'mensal') {
+                 const [year, month] = document.getElementById('reportMonthInput').value.split('-');
+                 dateRangeText = ` - Mês: ${month}/${year}`;
+            }
+
+
+            doc.text(`Relatório de Ganhos (${reportTypeDisplay})${dateRangeText}`, doc.internal.pageSize.getWidth() / 2, currentY, { align: "center" });
+            currentY += lineHeight;
+            doc.setFontSize(12);
+            doc.text(`Profissional: ${loggedInUser.fullName}`, doc.internal.pageSize.getWidth() / 2, currentY, { align: "center" });
+            currentY += lineHeight * 1.5;
+
 
             doc.setFont("helvetica", "normal");
-            doc.setFontSize(10);
+            doc.setFontSize(9); // Reduzir fonte da tabela
             doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--text-primary-feminine').trim());
 
-            // Cabeçalhos da Tabela
             const tableHeaders = ["Cliente", "Data/Hora", "Procedimentos", "Valor Pago", "Obs."];
-            const columnWidths = [40, 35, 60, 25, 30]; // Ajustar conforme necessário
+            const columnWidths = [35, 30, 65, 20, 30]; 
             
             function drawTableHeaders() {
                 doc.setFont("helvetica", "bold");
-                doc.setFillColor(getComputedStyle(document.documentElement).getPropertyValue('--primary-color-feminine').trim() + "33"); // Fundo suave
+                doc.setFillColor(getComputedStyle(document.documentElement).getPropertyValue('--primary-color-feminine').trim() + "33"); 
                 doc.rect(margin, currentY, doc.internal.pageSize.getWidth() - (margin * 2), lineHeight + tableCellPadding, 'F');
                 let currentX = margin + tableCellPadding;
                 tableHeaders.forEach((header, index) => {
@@ -1516,7 +1547,7 @@
             let permutasValorTotalEstimado = 0;
 
             filteredAppointments.forEach(app => {
-                if (currentY > doc.internal.pageSize.getHeight() - margin * 2.5) { // Verifica se precisa de nova página
+                if (currentY > doc.internal.pageSize.getHeight() - margin * 3) { 
                     doc.addPage();
                     currentY = margin;
                     drawTableHeaders();
@@ -1528,7 +1559,7 @@
 
                 if (app.isPermuta) {
                     valorLinha = 0; 
-                    obsText = `Permuta: ${app.permutaDescricao.substring(0,25)}${app.permutaDescricao.length > 25 ? '...' : ''} (Est: R$${Number(app.permutaValorEstimado).toFixed(2)})`;
+                    obsText = `Permuta: ${app.permutaDescricao.substring(0,20)}${app.permutaDescricao.length > 20 ? '...' : ''} (Est: R$${Number(app.permutaValorEstimado).toFixed(2)})`;
                     permutasCount++;
                     permutasValorTotalEstimado += Number(app.permutaValorEstimado || 0);
                 } else {
@@ -1538,20 +1569,43 @@
                     if (app.discountPercentage > 0) obsText += `Desc: ${app.discountPercentage}%`;
                 }
                 
-                let proceduresText = (app.procedures || []).map(p => `${p.name} (R$${Number(p.value).toFixed(2)})`).join("; ");
-                if (proceduresText.length > 40) proceduresText = proceduresText.substring(0, 37) + "..."; // Limita para caber
-
+                let proceduresTextArray = (app.procedures || []).map(p => `${p.name.substring(0,15)}${p.name.length > 15 ? '...' : ''} (R$${Number(p.value).toFixed(2)})`);
+                
                 const rowData = [
-                    app.clientName, dataHora, proceduresText, valorLinha.toFixed(2), obsText.trim()
+                    app.clientName, dataHora, "", valorLinha.toFixed(2), obsText.trim()
                 ];
+                
+                let initialYForRow = currentY;
+                let maxLinesInRow = 1;
 
+                // Desenha os primeiros campos
                 let currentX = margin + tableCellPadding;
-                rowData.forEach((cell, index) => {
-                    const lines = doc.splitTextToSize(String(cell), columnWidths[index] - (tableCellPadding * 2));
-                    doc.text(lines, currentX, currentY + smallLineHeight * 0.8);
-                    currentX += columnWidths[index];
+                doc.text(app.clientName, currentX, currentY + smallLineHeight * 0.8);
+                currentX += columnWidths[0];
+                doc.text(dataHora, currentX, currentY + smallLineHeight * 0.8);
+                currentX += columnWidths[1];
+                
+                // Desenha procedimentos (pode ter múltiplas linhas)
+                let procY = currentY + smallLineHeight * 0.8;
+                proceduresTextArray.forEach(procText => {
+                    if (procY > doc.internal.pageSize.getHeight() - margin * 2) { // Nova página se procedimentos estourarem
+                        doc.addPage(); currentY = margin; drawTableHeaders(); procY = currentY + smallLineHeight * 0.8; initialYForRow = currentY;
+                    }
+                    doc.text(procText, currentX, procY);
+                    procY += smallLineHeight * 0.9;
                 });
-                currentY += (lines.length > 1 ? lines.length * smallLineHeight * 0.8 : smallLineHeight * 1.3) + tableCellPadding;
+                maxLinesInRow = Math.max(maxLinesInRow, proceduresTextArray.length || 1);
+                currentX += columnWidths[2];
+
+                // Desenha os últimos campos alinhados com a primeira linha dos procedimentos
+                doc.text(valorLinha.toFixed(2), currentX, initialYForRow + smallLineHeight * 0.8);
+                currentX += columnWidths[3];
+                const obsLines = doc.splitTextToSize(obsText.trim(), columnWidths[4] - (tableCellPadding * 2));
+                doc.text(obsLines, currentX, initialYForRow + smallLineHeight * 0.8);
+                maxLinesInRow = Math.max(maxLinesInRow, obsLines.length || 1);
+
+
+                currentY = initialYForRow + (maxLinesInRow * smallLineHeight * 0.9) + tableCellPadding;
                 doc.setDrawColor(getComputedStyle(document.documentElement).getPropertyValue('--border-color-feminine').trim());
                 doc.line(margin, currentY -1, doc.internal.pageSize.getWidth() - margin, currentY -1);
 
@@ -1561,6 +1615,7 @@
             if (currentY > doc.internal.pageSize.getHeight() - margin * 2) { doc.addPage(); currentY = margin; }
 
             doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
             doc.text(`Total de Ganhos (Monetário): R$ ${granTotalGanhos.toFixed(2)}`, doc.internal.pageSize.getWidth() - margin, currentY, { align: "right" });
             currentY += lineHeight;
 
@@ -1622,7 +1677,7 @@
             currentY += lineHeight;
             
             if (professional) {
-                doc.text(`Profissional: ${professional.fullName} (${professional.area})`, margin, currentY);
+                doc.text(`Profissional: ${professional.fullName} (${professional.area})`, margin, currentY); // Nome da profissional adicionado
                 currentY += lineHeight;
             }
             currentY += smallLineHeight;
@@ -1657,20 +1712,26 @@
             } else {
                 if (app.isStarClient) {
                     doc.setFont("helvetica", "bold");
+                    doc.setFontSize(12); // Tamanho maior para destaque
                     doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--star-client-color').trim());
-                    doc.text("✨ Minha Cliente é uma Star! ✨ (20% Desconto Aplicado)", margin, currentY);
-                    currentY += smallLineHeight * 1.5;
+                    doc.text("✨ Minha Cliente é uma Star! ✨", margin, currentY);
+                    currentY += smallLineHeight * 1.8; // Mais espaço após
                     doc.setFont("helvetica", "normal");
+                    doc.setFontSize(10);
+                    doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--text-secondary-feminine').trim());
+                    doc.text(`(Desconto especial de 20% aplicado sobre R$ ${Number(app.totalValue).toFixed(2)})`, margin, currentY);
+                    currentY += smallLineHeight * 1.5;
+                    doc.setFontSize(11);
                     doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--text-primary-feminine').trim());
                 }
                 if (app.discountPercentage > 0) {
                     doc.setFont("helvetica", "italic");
                     doc.setFontSize(10);
                     doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--accent-color-feminine').trim());
-                    const valueBeforeAdditionalDiscount = app.isStarClient ? Number(app.totalValue) * 0.8 : Number(app.totalValue);
-                    doc.text(`Subtotal (após Star, se aplicável): R$ ${valueBeforeAdditionalDiscount.toFixed(2)}`, margin, currentY);
+                    const valueAfterStar = app.isStarClient ? Number(app.totalValue) * 0.8 : Number(app.totalValue);
+                    doc.text(`Subtotal (após desc. Star, se houver): R$ ${valueAfterStar.toFixed(2)}`, margin, currentY);
                     currentY += smallLineHeight * 1.2;
-                    doc.text(`Desconto Adicional Aplicado: ${app.discountPercentage}% (R$ ${(valueBeforeAdditionalDiscount * (app.discountPercentage/100)).toFixed(2)})`, margin, currentY);
+                    doc.text(`Desconto Adicional Aplicado: ${app.discountPercentage}% (R$ ${(valueAfterStar * (app.discountPercentage/100)).toFixed(2)})`, margin, currentY);
                     currentY += smallLineHeight * 1.5;
                     doc.setFont("helvetica", "normal");
                     doc.setFontSize(11);
@@ -1692,9 +1753,10 @@
                 currentY += notesLines.length * smallLineHeight;
             }
             
-            // Política de Remarcação e Adiantamento
             if (!app.naoCobrarAdiantamento) {
                 currentY += lineHeight * 0.8;
+                if (currentY > doc.internal.pageSize.getHeight() - margin * 4) { doc.addPage(); currentY = margin; } // Verifica espaço antes da política
+
                 doc.setDrawColor(getComputedStyle(document.documentElement).getPropertyValue('--border-color-feminine').trim());
                 doc.line(margin, currentY - (smallLineHeight * 0.5) , doc.internal.pageSize.getWidth() - margin, currentY - (smallLineHeight * 0.5));
                 currentY += smallLineHeight;
@@ -1709,12 +1771,14 @@
                 doc.setFontSize(9);
                 doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--text-secondary-feminine').trim());
                 const politicaText = [
-                    "Para garantir seu horário especial conosco, solicitamos um adiantamento de 30% do valor total do(s) serviço(s) agendado(s).",
-                    "Este valor será abatido no dia do seu atendimento. Agradecemos a compreensão!",
-                    "Remarcações ou cancelamentos podem ser feitos com até 48h de antecedência para reembolso ou reagendamento do adiantamento.",
+                    "Para dedicarmos seu horário com todo carinho, solicitamos um adiantamento de 30% do valor total do(s) serviço(s) agendado(s).",
+                    "Este valor será, claro, abatido no dia do seu atendimento. Agradecemos imensamente sua compreensão e colaboração!",
+                    "Sabemos que imprevistos acontecem! Remarcações ou cancelamentos podem ser feitos com até 48h de antecedência.",
+                    "Nesse caso, seu adiantamento pode ser usado para um novo horário ou reembolsado.",
                     "Estamos ansiosas para te receber e realçar ainda mais sua beleza! 💕"
                 ];
                 politicaText.forEach(line => {
+                    if (currentY > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); currentY = margin; }
                     const lines = doc.splitTextToSize(line, doc.internal.pageSize.getWidth() - (margin * 2));
                     doc.text(lines, margin, currentY);
                     currentY += lines.length * smallLineHeight * 0.9;
@@ -1743,7 +1807,7 @@
         }
 
 
-        // --- Funções do Painel Admin ---
+        // --- Funções do Painel Admin (mantidas e adaptadas como antes) ---
         function populateAdminPanel() {
             if (!loggedInUser || !loggedInUser.isAdmin) return;
             renderManageProfessionals();
